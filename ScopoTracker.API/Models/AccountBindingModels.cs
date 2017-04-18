@@ -40,6 +40,7 @@ namespace ScopoTracker.API.Models
 
         [Required]
         [Display(Name = "Email")]
+        [EmailAddress(ErrorMessage ="Email address is not valid.")]
         public string Email { get; set; }
 
         [Required]

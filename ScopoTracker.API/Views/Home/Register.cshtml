@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+<div class="row" ng-controller="appController">
+    <div class="col-md-10">
+        <form name="registerForm" class="form-horizontal" ng-submit="register()">
+            <div class="form-group">
+                <label class="col-md-2">Username</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" ng-model="user.UserName"
+                           required
+                           />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2">Email</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" ng-model="user.Email"
+                           required
+                           />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2">Password</label>
+                <div class="col-md-10">
+                    <input type="password" class="form-control" ng-model="user.Password"
+                           required
+                           />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2">Confirm Password</label>
+                <div class="col-md-10">
+                    <input type="password" class="form-control" ng-model="user.ConfirmPassword"
+                           required
+                           />
+                </div>
+            </div>
+            <div class="form-group">                
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-success">Register</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
