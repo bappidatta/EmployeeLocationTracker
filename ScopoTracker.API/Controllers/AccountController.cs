@@ -16,6 +16,7 @@ using Microsoft.Owin.Security.OAuth;
 using ScopoTracker.API.Models;
 using ScopoTracker.API.Providers;
 using ScopoTracker.API.Results;
+using System.Linq;
 
 namespace ScopoTracker.API.Controllers
 {
@@ -25,7 +26,7 @@ namespace ScopoTracker.API.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
-
+        
         public AccountController()
         {
         }
@@ -50,6 +51,26 @@ namespace ScopoTracker.API.Controllers
         }
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
+
+
+        /// <summary>
+        /// Get User List 
+        /// </summary>
+        /// <returns></returns>
+        // Get api/Account/UserList
+        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+        [Route("UserList")]
+        [HttpGet]
+        public List<UserListViewModel> UserList()
+        {            
+            var dbContext = HttpContext.Current.Request.GetOwinContext().Get<ApplicationDbContext>();
+            var users = dbContext.Users.Select(x => new UserListViewModel
+            {
+                UserName = x.UserName,
+                Email = x.Email                
+            }).ToList();
+            return users;
+        }
 
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]

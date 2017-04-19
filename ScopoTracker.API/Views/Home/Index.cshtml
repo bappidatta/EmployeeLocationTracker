@@ -69,7 +69,24 @@
     </div>
 
     <div class="col-md-10" ng-if="auth.isLoggedIn()">
-        <h1>Welcome!</h1>
+       <h1>Welcome!</h1>
+        <div class="table-responsive">            
+            <h3>Users in the system</h3>
+            <table class="table table-bordered table-condensed table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="u in userList">
+                        <td>{{u.UserName}}</td>
+                        <td>{{u.Email}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </div>
