@@ -16,7 +16,19 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Home", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Home", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li><a href="#" 
+               ng-click="navigateTo('register')"              
+               ng-if="!auth.isLoggedIn() && state.login"
+               >Register</a></li>
+        <li><a href="#" 
+               ng-click="navigateTo('login')"
+                ng-if="!auth.isLoggedIn() && !state.login"
+               >Login</a></li>
+
+        <li>
+            <a href="#"
+               ng-click="logOut()"
+               ng-if="auth.isLoggedIn()">LogOut</a>
+        </li>
     </ul>
 }
