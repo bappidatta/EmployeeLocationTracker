@@ -1,21 +1,193 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    font-family: 'Raleway', sans-serif !important;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.selected {
+    background-color: deepskyblue !important;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.styleSelected {
+    background-color: #00A65A !important;
+}
+
+form.ng-submitted .ng-invalid {
+    border: 1px solid #ff6a00;
+}
+
+#loading-bar .bar {
+    background: #ff6a00;
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
+    display: none !important;
+}
+
+.btn-hover:hover {
+    cursor: default;
+}
+
+.lb-custom-font-size {
+    font-size: 15px !important;
+}
+
+.tab-pane {
+    padding: 15px;
+}
+
+.btn-default {
+    /*background: lightcyan !important;*/
+}
+
+.box-solid {
+    border: 1px solid lightblue !important;
+}
+
+.box-header {
+    background: #eee !important;
+    color: #999;
+}
+
+label {
+    font-weight: normal !important;
+}
+
+.with-border {
+    border-bottom: 1px solid lightblue !important;
+}
+
+.skin-black .main-header > .navbar {
+    /*background-color: #fff;*/
+    background-color: #113a65;
+    border-bottom: 1px solid lightblue !important;
+}
+
+.skin-black .main-header>.navbar .nav>li>a {
+    color: #fff;
+}
+
+.box .nav-stacked > li {
+    border-bottom: 1px solid lightblue !important;
+}
+
+.text-menu {
+    font-size: 14px;
+    font-weight: 300;
+    /*text-transform: uppercase;*/
+}
+
+.text-menu-items {
+}
+
+.login-box-body, .register-box-body {
+    border: 1px solid lightblue;
+}
+
+.content {
+    padding: 5px !important;
+    padding-top: 0px !important;
+}
+
+.row {
+    margin-left: -3px !important;
+    margin-right: -3px !important;
+}
+
+.box {
+    margin-bottom: 0px !important;
+    border-radius: 0px !important;
+    min-height: 1000px !important;
+}
+
+
+.column {
+    /*padding-left: 2.5px !important;
+    padding-right: 2.5px !important;*/
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.nav-stacked > li.active > a, .nav-stacked > li.active > a:hover {
+    /*background: #fff8e1 !important;*/
+    background: #0072C6 !important;
+    color: #fff;
+    /*color: #333 !important;*/
+}
+
+.nav-stacked > li.active > a {
+    box-shadow: 0px 0px 3px #fff !important;
+}
+
+.nav-stacked > li > a:hover {
+    box-shadow: 0px 0px 3px #333 !important;
+}
+
+table.no-wrap > tbody > tr > td, table.no-wrap > thead > tr > th {
+    white-space: nowrap !important;
+}
+
+table.no-wrap > tbody > tr > td {
+    min-width: 120px !important;
+}
+
+/*table.selectable>tbody>tr:hover{
+    box-shadow: 0px 0px 3px #333 !important;
+    background: #f7f7f7 !important;
+}*/
+
+.fwSelected {
+    background: #3c8dbc !important;
+    color: #fff !important;
+}
+
+/*.fwSelected:hover{
+    color: #3c8dbc !important;
+}*/
+
+.color-lightblue {
+    color: #2F4F4F !important;
+}
+
+.box-header {
+    background: #ffffff !important;
+    height: 50px;
+}
+
+footer.main-footer {
+    height: 50px !important;
+}
+
+.table > tbody > tr.active > td {
+    background: #0072C6 !important;
+    color: #fff;
+}
+
+.disabled {
+    pointer-events: none !important;
+    
+}
+
+.disabled:hover{
+    box-shadow: 0px 0px 0px #000 !important;
+}
+
+
+
+#employeeCardNo_dropdown, .dropdown-menu{    
+    overflow-y: auto;
+    max-height: 350px !important; 
+}
+
+.context-menu{
+    margin-top: 4px !important;
+}
+
+.nt-table-header>th{
+    background: #0072C6 !important;
+    color: #fff;    
+}
+
+.profile-user-img{
+    width: 150px !important;
 }

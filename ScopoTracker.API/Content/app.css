@@ -1,0 +1,14 @@
+﻿.form-horizontal .control-label {
+    text-align: left !important;
+    font-weight: bold;
+    font-size: 13px;
+}
+.form-group {
+    margin-bottom: 8px !important;
+}
+.input-group{
+    z-index: 1 !important;
+}
+.export a, .export a:visited, .export a:hover, .export a:focus, .export a:link{
+    color: inherit;
+}

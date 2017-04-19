@@ -3,8 +3,171 @@
     ViewBag.Title = "Home";
 }
 
-<div class="row" style="margin-top: 20px;">
-    <div class="col-md-10" ng-if="!auth.isLoggedIn() && state.login">
+<div class="row" ng-if="auth.isLoggedIn()">    
+    <div class="col-md-3 column">
+        <div class="box box-solid">
+            <header class="box-header with-border">
+                <h3 class="box-title">Users</h3>             
+            </header>
+            <div class="box-body" >
+                <form name="forms.registerForm" class="form-horizontal" ng-submit="register()">
+                    <div class="form-group">
+                        <label class="col-md-4">Username</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="user.UserName"
+                                   required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">Email</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="user.Email"
+                                   required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">Password</label>
+                        <div class="col-md-8">
+                            <input type="password" class="form-control" ng-model="user.Password"
+                                   required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">Confirm Password</label>
+                        <div class="col-md-8">
+                            <input type="password" class="form-control" ng-model="user.ConfirmPassword"
+                                   required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-default btn-sm pull-right">Add User</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="box-body">
+                <ul class="nav nav-pills nav-stacked" style="height: 800px !important; overflow:auto;">
+                    <li ng-repeat="u in userList">                    
+                           <a class="#">
+                           <span><i class="fa fa-user"></i> {{u.UserName}}</span><br />
+                           <span>{{u.Email}}</span>
+                       </a>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="col-md-3 column">
+        <div class="box box-solid">
+            <header class="box-header with-border">
+                <h3 class="box-title">Agent</h3>
+            </header>
+            <div class="box-body">
+                <form class="form-horizontal" name="agentForm">
+                    <div class="form-group">
+                        <label class="col-md-12">Agent Name</label>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <button class="btn btn-default btn-sm pull-right">
+                                Add Agent
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="box-body">
+                <ul class="nav nav-pills nav-stacked" style="height: 800px !important; overflow:auto;">
+                    <li ng-repeat="u in userList">
+                        <a class="#">
+                            <span><i class="fa fa-user"></i> {{u.UserName}}</span><br />
+                            <span>{{u.Email}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 column">
+        <div class="box box-solid">
+            <header class="box-header with-border">
+                <h3 class="box-title">Bank</h3>
+            </header>
+            <div class="box-body">
+                <form class="form-horizontal" name="bankForm">
+                    <div class="form-group">
+                        <label class="col-md-12">Bank Name</label>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <button class="btn btn-default btn-sm pull-right">
+                                Add Bank
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="box-body">
+                <ul class="nav nav-pills nav-stacked" style="height: 800px !important; overflow:auto;">
+                    <li ng-repeat="u in userList">
+                        <a class="#">
+                            <span><i class="fa fa-user"></i> {{u.UserName}}</span><br />
+                            <span>{{u.Email}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 column">
+        <div class="box box-solid">
+            <header class="box-header with-border">
+                <h3 class="box-title">Center</h3>              
+            </header>
+            <div class="box-body">
+                <form class="form-horizontal" name="bankForm">
+                    <div class="form-group">
+                        <label class="col-md-12">Center Name</label>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-12">
+                          <button class="btn btn-default btn-sm pull-right">
+                              Add Center
+                          </button>
+                      </div>
+                    </div>
+                </form>
+            </div>
+            <div class="box-body">
+                <ul class="nav nav-pills nav-stacked" style="height: 800px !important; overflow:auto;">
+                    <li ng-repeat="u in userList">
+                        <a class="#">
+                            <span><i class="fa fa-user"></i> {{u.UserName}}</span><br />
+                            <span>{{u.Email}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-if="!auth.isLoggedIn() && state.login">
+    <div class="col-md-10">
         <form class="form-horizontal" name="forms.loginForm" ng-submit="login()">
             <div class="form-group">
                 <label class="col-md-2">Username</label>
@@ -29,64 +192,4 @@
             </div>
         </form>
     </div>
-
-    <div class="col-md-10" ng-if="!auth.isLoggedIn() && !state.login">
-        <form name="forms.registerForm" class="form-horizontal" ng-submit="register()">
-            <div class="form-group">
-                <label class="col-md-2">Username</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" ng-model="user.UserName"
-                           required />
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2">Email</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" ng-model="user.Email"
-                           required />
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2">Password</label>
-                <div class="col-md-10">
-                    <input type="password" class="form-control" ng-model="user.Password"
-                           required />
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2">Confirm Password</label>
-                <div class="col-md-10">
-                    <input type="password" class="form-control" ng-model="user.ConfirmPassword"
-                           required />
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" class="btn btn-success">Register</button>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div class="col-md-10" ng-if="auth.isLoggedIn()">
-       <h1>Welcome!</h1>
-        <div class="table-responsive">            
-            <h3>Users in the system</h3>
-            <table class="table table-bordered table-condensed table-hover table-striped">
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="u in userList">
-                        <td>{{u.UserName}}</td>
-                        <td>{{u.Email}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
 </div>
