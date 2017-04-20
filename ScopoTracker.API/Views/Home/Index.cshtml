@@ -21,7 +21,7 @@
                     <div class="form-group">
                         <label class="col-md-4">Email</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control input-sm" ng-model="user.Email"
+                            <input type="email" class="form-control input-sm" ng-model="user.Email"
                                    required />
                         </div>
                     </div>
@@ -41,8 +41,8 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <button type="submit" class="btn btn-default btn-sm pull-right">
-                              <i class="fa fa-user text-green"></i>  Add User
+                            <button type="submit" class="btn btn-default btn-xs pull-right">
+                              <i class="fa fa-user text-green"></i>  Add
                             </button>
                         </div>
                     </div>
@@ -50,8 +50,10 @@
             </div>
             <div class="box-body">
                 <ul class="nav nav-pills nav-stacked" style="height: 800px !important; overflow:auto;">
-                    <li ng-repeat="u in userList">                    
-                           <a class="#">
+                    <li ng-repeat="u in userList"
+                         ng-class="{active:u.selected}"
+                        >
+                           <a href="#"  ng-click="selectItem(u, 'user', $index)">
                            <span><i class="fa fa-user text-green"></i> {{u.UserName}}</span><br />
                            <span><i class="fa fa-envelope-o text-blue"></i> {{u.Email}}</span>
                        </a>
@@ -68,17 +70,32 @@
                 <h3 class="box-title">Agent</h3>
             </header>
             <div class="box-body">
-                <form class="form-horizontal" name="agentForm">
+                <form class="form-horizontal" name="forms.agentForm" ng-submit="addAgent()">
                     <div class="form-group">
                         <label class="col-md-12">Agent Name</label>
                         <div class="col-md-12">
-                            <input type="text" class="form-control input-sm" />
+                            <input type="text" class="form-control input-sm" ng-model="agent.AgentName" required/>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <button class="btn btn-default btn-sm pull-right">
-                                Add Agent
+                            <button type="button" class="btn btn-default btn-xs"
+                                    ng-if="!context.newAgent"
+                                    ng-click="newAgent()">
+                                New
+                            </button>
+                            <button type="button" class="btn btn-default btn-xs"
+                                    ng-if="!context.newAgent"
+                                    ng-click="deleteAgent()"
+                                    >
+                                Delete
+                            </button>
+                            <button type="submit" class="btn btn-default btn-xs pull-right" 
+                                    ng-if="context.newAgent">
+                                <i class="fa fa-user text-blue"></i> Add</button>
+                            <button type="submit" class="btn btn-default btn-xs pull-right"
+                                    ng-if="!context.newAgent">
+                                Update
                             </button>
                         </div>
                     </div>
@@ -86,10 +103,11 @@
             </div>
             <div class="box-body">
                 <ul class="nav nav-pills nav-stacked" style="height: 800px !important; overflow:auto;">
-                    <li ng-repeat="u in userList">
-                        <a class="#">
-                            <span><i class="fa fa-user"></i> {{u.UserName}}</span><br />
-                            <span>{{u.Email}}</span>
+                    <li ng-repeat="u in agentList" ng-click="selectItem(u, 'agent', $index)"
+                        ng-class="{active:u.selected}"
+                        >
+                        <a href="#">
+                            <span><i class="fa fa-user text-blue"></i> {{u.AgentName}}</span>
                         </a>
                     </li>
                 </ul>
@@ -103,17 +121,32 @@
                 <h3 class="box-title">Bank</h3>
             </header>
             <div class="box-body">
-                <form class="form-horizontal" name="bankForm">
+                <form class="form-horizontal" name="forms.bankForm" ng-submit="addBank()">
                     <div class="form-group">
                         <label class="col-md-12">Bank Name</label>
                         <div class="col-md-12">
-                            <input type="text" class="form-control input-sm" />
+                            <input type="text" class="form-control input-sm" ng-model="bank.BankName" required/>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <button class="btn btn-default btn-sm pull-right">
-                                Add Bank
+                            <button type="button" class="btn btn-default btn-xs"
+                                    ng-if="!context.newBank"
+                                    ng-click="newBank()">
+                                New
+                            </button>
+                            <button type="button" class="btn btn-default btn-xs"
+                                    ng-if="!context.newBank"
+                                    ng-click="deleteBank()">
+                                Delete
+                            </button>
+                            <button type="submit" class="btn btn-default btn-xs pull-right"
+                                    ng-if="context.newBank">
+                                <i class="fa fa-university text-blue"></i> Add
+                            </button>
+                            <button type="submit" class="btn btn-default btn-xs pull-right"
+                                    ng-if="!context.newBank">
+                                Update
                             </button>
                         </div>
                     </div>
@@ -121,10 +154,11 @@
             </div>
             <div class="box-body">
                 <ul class="nav nav-pills nav-stacked" style="height: 800px !important; overflow:auto;">
-                    <li ng-repeat="u in userList">
-                        <a class="#">
-                            <span><i class="fa fa-user"></i> {{u.UserName}}</span><br />
-                            <span>{{u.Email}}</span>
+                    <li ng-repeat="u in bankList"
+                         ng-class="{active:u.selected}"
+                        >
+                        <a class="#" ng-click="selectItem(u, 'bank', $index)">
+                            <span><i class="fa fa-university text-blue"></i> {{u.BankName}}</span>
                         </a>
                     </li>
                 </ul>
@@ -138,28 +172,52 @@
                 <h3 class="box-title">Center</h3>              
             </header>
             <div class="box-body">
-                <form class="form-horizontal" name="bankForm">
+                <form class="form-horizontal" name="forms.centerForm" ng-submit="addCenter()">
                     <div class="form-group">
                         <label class="col-md-12">Center Name</label>
                         <div class="col-md-12">
-                            <input type="text" class="form-control input-sm" />
+                            <input type="text" class="form-control input-sm" ng-model="center.CenterName" required/>
                         </div>
                     </div>
                     <div class="form-group">
-                      <div class="col-md-12">
-                          <button class="btn btn-default btn-sm pull-right">
-                              Add Center
-                          </button>
-                      </div>
+                        <label class="col-md-12">Center No</label>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control input-sm" ng-model="center.CenterNo" required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-default btn-xs"
+                                    ng-if="!context.newCenter"
+                                    ng-click="newCenter()">
+                                New
+                            </button>
+                            <button type="button" class="btn btn-default btn-xs"
+                                    ng-if="!context.newCenter"
+                                    ng-click="deleteCenter()">
+                                Delete
+                            </button>
+                            <button type="submit" class="btn btn-default btn-xs pull-right"
+                                    ng-if="context.newCenter">
+                                <i class="fa fa-briefcase text-blue"></i> Add
+                            </button>
+                            <button type="submit" class="btn btn-default btn-xs pull-right"
+                                    ng-if="!context.newCenter"
+                                    ng-click="updateCenter()">
+                                Update
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="box-body">
                 <ul class="nav nav-pills nav-stacked" style="height: 800px !important; overflow:auto;">
-                    <li ng-repeat="u in userList">
-                        <a class="#">
-                            <span><i class="fa fa-user"></i> {{u.UserName}}</span><br />
-                            <span>{{u.Email}}</span>
+                    <li ng-repeat="u in centerList track by $index"
+                         ng-class="{active:u.selected}"
+                        >
+                        <a class="#" ng-click="selectItem(u, 'center', $index)">
+                            <span><i class="fa fa-briefcase text-blue"></i> {{u.CenterName}}</span><br />
+                            <span>{{u.CenterNo}}</span>
                         </a>
                     </li>
                 </ul>

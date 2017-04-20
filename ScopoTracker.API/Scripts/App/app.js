@@ -23,30 +23,12 @@ angular.module('scopoApp').factory('authInterceptor', [
                 config.headers = config.headers || {};
                 if ($window.localStorage.token) {
                     config.headers.Authorization = 'Bearer ' + $window.localStorage.token;
-                    $rootScope.userName = $window.localStorage.userName;
-                    if (localStorage.notifications) {
-                        $rootScope.notifications = JSON.parse(localStorage.notifications);
-                    }
+                    $rootScope.userName = $window.localStorage.userName;                    
                     $rootScope.signOut = function () {
-                        $window.localStorage.removeItem('token');
-                        $rootScope.userName = null;
-                        $rootScope.notifications = [];
-                        localStorage.removeItem('notifications');
-                        $location.path('/landing');
+                        $window.localStorage.removeItem('token');                                                             
                     }
                 } else {
-                    if ($location.$$url == '/Candidate-Signup') {
-                        $location.path('/Candidate-Signup');
-                    } else if ($location.$$url == '/Employer-Signup') {
-                        $location.path('/Employer-Signup');
-                    } else if ($location.$$url == '/' || $location.$$url == '/landing') {
-                        $location.path('/landing');
-                    } else if ($location.$$url == '/Search-Jobs') {
-                        $location.path('/Search-Jobs');
-                    }
-                    else {
-                        $location.path('/SignIn');
-                    }
+                    $location.path('/Index');
                 }
                 return config;
             },
@@ -74,6 +56,9 @@ scopoApp.controller('appController', ['$http', '$scope', function ($http, $scope
     $scope.state = { login: true };
     $scope.forms = {};
     $scope.user = {};
+    $scope.agent = {};
+    $scope.bank = {};
+    $scope.center = {};
     $scope.auth = {
         getToken () {
             return localStorage.getItem('token');
@@ -95,35 +80,52 @@ scopoApp.controller('appController', ['$http', '$scope', function ($http, $scope
 
     // top order data containers
     $scope.userList = [];
-
-
+    $scope.agentList = [];
+    $scope.bankList = [];
+    $scope.centerList = [];
     // init
     $scope.init = () => {
         if ($scope.auth.isLoggedIn()) {
             getUsers();
+            getAgents();
+            getBanks();
+            getCenters();
         }
     }
-
+    $scope.context = {
+        newAgent: true,
+        newBank: true,
+        newUser: true,
+        newCenter: true
+    }
     let goto = {
-        register: function () {            
-            $scope.state.login = false;
+        agent: function (agent) {            
+            $scope.agent = angular.copy(agent);
+            $scope.context.newAgent = false;
         },
-        login: function() {     
-            $scope.state.login = true;
-        }
+        bank: function(item) {     
+            $scope.bank = angular.copy(item);
+            $scope.context.newBank = false;
+        },
+        user: function (item) {
+            //$scope.user = angular.copy(item);
+            //$scope.context.user = false;
+        },
+        center: function (item) {
+            $scope.center = angular.copy(item);
+            $scope.context.newCenter = false;
+        },
     }
 
-    $scope.navigateTo = (nav) => {
-        console.log(nav);
-        goto[nav]();
+    let prevItem = {
+        agent: null,
+        bank: null,
+        center: null,
+        user: null
     }
+
+    // scope variables    
     
-    $scope.register = () => {
-        if (!$scope.forms.registerForm.$valid)
-            return;
-        registraterUser($scope.user);
-    }
-
     $scope.login = () => {        
         if (!$scope.forms.loginForm.$valid)
             return;        
@@ -134,8 +136,86 @@ scopoApp.controller('appController', ['$http', '$scope', function ($http, $scope
         $scope.auth.destory();
     }
     
+    $scope.selectItem = (item, type, index) => {
+        item.selected = true;
+        if (prevItem[type] != null)
+            prevItem[type].selected = false;
+        prevItem[type] = item;
+        goto[type](item);
+    }
+    
+    $scope.newAgent = () => {
+        $scope.context.newAgent = true;
+        resetForm($scope.forms.agentForm);
+        $scope.agent = {};
+    }
 
-    // Login
+    $scope.newBank = () => {
+        $scope.context.newBank = true;
+        resetForm($scope.forms.bankForm);
+        $scope.bank = {};
+    }
+
+    $scope.newCenter = () => {
+        $scope.context.newCenter = true;
+        resetForm($scope.forms.centerForm);
+        $scope.center = {};
+    }
+
+    $scope.deleteAgent = () => {
+        deleteAgent($scope.agent.AgentID);
+    }
+
+    $scope.deleteBank = () => {
+        deleteBank($scope.bank.BankID);
+    }
+
+    $scope.deleteCenter = () => {
+        deleteCenter($scope.center.CenterID)
+    }
+
+
+    // create 
+    $scope.register = () => {
+        if (!$scope.forms.registerForm.$valid)
+            return;
+        if ($scope.user.Password !== $scope.user.ConfirmPassword) {
+            alert('Password & Confirm Password dose not match!');
+            return;
+        }            
+        registraterUser($scope.user);
+    }
+
+    $scope.addAgent = () => {
+        if (!$scope.forms.agentForm.$valid)
+            return;        
+        if ($scope.context.newAgent)
+            addAgent($scope.agent);
+        else
+            updateAgent($scope.agent);
+    }
+
+    $scope.addBank = () => {
+        if (!$scope.forms.bankForm.$valid)
+            return;
+        if ($scope.context.newBank)
+            addBank($scope.bank);
+        else
+            updateBank($scope.bank);
+    }
+
+    $scope.addCenter = () => {
+        if (!$scope.forms.centerForm.$valid)
+            return;
+        if ($scope.context.newCenter)
+            addCenter($scope.center);
+        else
+            updateCenter($scope.center);
+    }
+
+
+
+    // function definations
     let login = (user) => {
         let data = 'grant_type=password&username=' + user.UserName +
            '&password=' + user.Password;
@@ -157,23 +237,120 @@ scopoApp.controller('appController', ['$http', '$scope', function ($http, $scope
             handleHttpError(err);
         });
     };
-    
-    // Register
-    let registraterUser = (user) => {
-        $http.post(serverRoot + 'api/Account/Register', user).then(res => {            
-            $scope.state.login = true;
-        }, err => {
-            handleHttpError(err);
-        });
-    }
-    // Error handling
+
     let handleHttpError = (err) => {
         console.log(err);
     }
 
+    // Create
+    let registraterUser = (user) => {
+        $http.post(serverRoot + 'api/Account/Register', user).then(res => {
+            getUsers();
+            resetForm($scope.forms.registerForm);            
+            $scope.user = {};
+        }, err => {
+            handleHttpError(err);
+        });
+    }
+
+    let addAgent = (agent) => {
+        $http.post(serverRoot + 'api/Agents', agent).then(res=> {            
+            getAgents();
+            resetForm($scope.forms.agentForm);
+            $scope.agent = {};
+        }, err=> { handleHttpError(err); });
+    }
+
+    let addBank = (bank) => {
+        $http.post(serverRoot + 'api/Banks', bank).then(res=> {
+            getBanks();
+            resetForm($scope.forms.bankForm);
+            $scope.bank = {};
+        }, err=> { handleHttpError(err); });
+    }
+
+    let addCenter = (center) => {
+        $http.post(serverRoot + 'api/Centers', center).then(res=> {
+            getCenters();
+            resetForm($scope.forms.centerForm);
+            $scope.center = {};
+        }, err=> { handleHttpError(err); });
+    }
+
+    // Update
+    let updateAgent = (agent) => {
+        $http.put(serverRoot + 'api/Agents/'+agent.AgentID, agent).then(res=> {
+            getAgents();
+        }, err=> { handleHttpError(err); });
+    }
+
+    let updateBank = (bank) => {
+        $http.put(serverRoot + 'api/Banks/' + bank.BankID, bank).then(res=> {
+            getBanks();
+        }, err=> { handleHttpError(err); });
+    }
+
+    let updateCenter = (center) => {
+        $http.put(serverRoot + 'api/Centers/' + center.CenterID, center).then(res=> {
+            getCenters();
+        }, err=> { handleHttpError(err); });
+    }
+
+    // Delete
+    let deleteAgent = (id)=>{
+        $http.delete(serverRoot + 'api/Agents/' + id).then(res=> {            
+            getAgents();
+            $scope.newAgent();
+        }, err=> { console.log(err); });
+    }
+
+    let deleteBank = (id) => {
+        $http.delete(serverRoot + 'api/Banks/' + id).then(res=> {
+            getBanks();
+            $scope.newBank();
+        });
+    }
+
+    let deleteCenter = (id) => {
+        $http.delete(serverRoot + 'api/Centers/' + id).then(res=> {
+            getCenters();
+            $scope.newCenter();
+        });
+    }
+
+    // Data loaders
     let getUsers = () => {
         $http.get(serverRoot + 'api/Account/UserList').then(res=> {
             $scope.userList = res.data;
         }, err=> { handleHttpError(err); });
+    }    
+    let getAgents = () => {
+        $http.get(serverRoot + 'api/Agents').then(res=> {
+            console.log(res.data);
+            $scope.agentList = res.data;
+        }, err=> { handleHttpError(err); });
     }
+    let getBanks = () => {
+        $http.get(serverRoot + 'api/Banks').then(res=> {
+            console.log(res.data);
+            $scope.bankList = res.data;
+        }, err=> { handleHttpError(err); });
+    }
+    let getCenters = () => {
+        $http.get(serverRoot + 'api/Centers').then(res=> {
+            console.log(res.data);
+            $scope.centerList = res.data;
+        }, err=> { handleHttpError(err); });
+    }
+
+    // utilities
+    let resetForm = (form, func)=>{
+        form.$setPristine();
+        form.$setUntouched();
+        if (func)
+            func();
+    }
+
+    
+
 }]);

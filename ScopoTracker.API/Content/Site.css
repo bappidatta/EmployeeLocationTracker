@@ -10,9 +10,9 @@
     background-color: #00A65A !important;
 }
 
-form.ng-submitted .ng-invalid {
+/*form.ng-submitted .ng-invalid {
     border: 1px solid #ff6a00;
-}
+}*/
 
 #loading-bar .bar {
     background: #ff6a00;

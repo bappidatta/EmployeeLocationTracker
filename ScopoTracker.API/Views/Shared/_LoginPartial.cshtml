@@ -15,16 +15,7 @@
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" 
-               ng-click="navigateTo('register')"              
-               ng-if="!auth.isLoggedIn() && state.login"
-               >Register</a></li>
-        <li><a href="#" 
-               ng-click="navigateTo('login')"
-                ng-if="!auth.isLoggedIn() && !state.login"
-               >Login</a></li>
-
+    <ul class="nav navbar-nav navbar-right">        
         <li>
             <a href="#"
                ng-click="logOut()"
