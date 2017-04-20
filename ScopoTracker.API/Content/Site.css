@@ -110,7 +110,8 @@ label {
 
 .nav-stacked > li.active > a, .nav-stacked > li.active > a:hover {
     /*background: #fff8e1 !important;*/
-    background: #0072C6 !important;
+    /*background: #0072C6 !important;*/
+    background: orange !important;
     color: #fff;
     /*color: #333 !important;*/
 }

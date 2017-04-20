@@ -79,12 +79,12 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <button type="button" class="btn btn-default btn-xs"
+                            <button type="button" class="btn btn-primary btn-xs"
                                     ng-if="!context.newAgent"
                                     ng-click="newAgent()">
                                 New
                             </button>
-                            <button type="button" class="btn btn-default btn-xs"
+                            <button type="button" class="btn btn-danger btn-xs"
                                     ng-if="!context.newAgent"
                                     ng-click="deleteAgent()"
                                     >
@@ -93,7 +93,7 @@
                             <button type="submit" class="btn btn-default btn-xs pull-right" 
                                     ng-if="context.newAgent">
                                 <i class="fa fa-user text-blue"></i> Add</button>
-                            <button type="submit" class="btn btn-default btn-xs pull-right"
+                            <button type="submit" class="btn btn-success btn-xs pull-right"
                                     ng-if="!context.newAgent">
                                 Update
                             </button>
@@ -130,12 +130,12 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <button type="button" class="btn btn-default btn-xs"
+                            <button type="button" class="btn btn-primary btn-xs"
                                     ng-if="!context.newBank"
                                     ng-click="newBank()">
                                 New
                             </button>
-                            <button type="button" class="btn btn-default btn-xs"
+                            <button type="button" class="btn btn-danger btn-xs"
                                     ng-if="!context.newBank"
                                     ng-click="deleteBank()">
                                 Delete
@@ -144,7 +144,7 @@
                                     ng-if="context.newBank">
                                 <i class="fa fa-university text-blue"></i> Add
                             </button>
-                            <button type="submit" class="btn btn-default btn-xs pull-right"
+                            <button type="submit" class="btn btn-success btn-xs pull-right"
                                     ng-if="!context.newBank">
                                 Update
                             </button>
@@ -157,7 +157,7 @@
                     <li ng-repeat="u in bankList"
                          ng-class="{active:u.selected}"
                         >
-                        <a class="#" ng-click="selectItem(u, 'bank', $index)">
+                        <a href="#" ng-click="selectItem(u, 'bank', $index)">
                             <span><i class="fa fa-university text-blue"></i> {{u.BankName}}</span>
                         </a>
                     </li>
@@ -187,12 +187,12 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <button type="button" class="btn btn-default btn-xs"
+                            <button type="button" class="btn btn-primary btn-xs"
                                     ng-if="!context.newCenter"
                                     ng-click="newCenter()">
                                 New
                             </button>
-                            <button type="button" class="btn btn-default btn-xs"
+                            <button type="button" class="btn btn-danger btn-xs"
                                     ng-if="!context.newCenter"
                                     ng-click="deleteCenter()">
                                 Delete
@@ -201,7 +201,7 @@
                                     ng-if="context.newCenter">
                                 <i class="fa fa-briefcase text-blue"></i> Add
                             </button>
-                            <button type="submit" class="btn btn-default btn-xs pull-right"
+                            <button type="submit" class="btn btn-success btn-xs pull-right"
                                     ng-if="!context.newCenter"
                                     ng-click="updateCenter()">
                                 Update
@@ -215,7 +215,7 @@
                     <li ng-repeat="u in centerList track by $index"
                          ng-class="{active:u.selected}"
                         >
-                        <a class="#" ng-click="selectItem(u, 'center', $index)">
+                        <a href="#" ng-click="selectItem(u, 'center', $index)">
                             <span><i class="fa fa-briefcase text-blue"></i> {{u.CenterName}}</span><br />
                             <span>{{u.CenterNo}}</span>
                         </a>

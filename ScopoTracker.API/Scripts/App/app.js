@@ -136,7 +136,7 @@ scopoApp.controller('appController', ['$http', '$scope', function ($http, $scope
         $scope.auth.destory();
     }
     
-    $scope.selectItem = (item, type, index) => {
+    $scope.selectItem = (item, type, index) => {        
         item.selected = true;
         if (prevItem[type] != null)
             prevItem[type].selected = false;
@@ -231,8 +231,7 @@ scopoApp.controller('appController', ['$http', '$scope', function ($http, $scope
                 return;
             }
             localStorage.setItem('token', res.data.access_token);
-            localStorage.setItem('userName', user.UserName);
-            getUsers();
+            localStorage.setItem('userName', user.UserName);            
         }, err => {
             handleHttpError(err);
         });
@@ -281,18 +280,21 @@ scopoApp.controller('appController', ['$http', '$scope', function ($http, $scope
     let updateAgent = (agent) => {
         $http.put(serverRoot + 'api/Agents/'+agent.AgentID, agent).then(res=> {
             getAgents();
+            $scope.newAgent();
         }, err=> { handleHttpError(err); });
     }
 
     let updateBank = (bank) => {
         $http.put(serverRoot + 'api/Banks/' + bank.BankID, bank).then(res=> {
             getBanks();
+            $scope.newBank();
         }, err=> { handleHttpError(err); });
     }
 
     let updateCenter = (center) => {
         $http.put(serverRoot + 'api/Centers/' + center.CenterID, center).then(res=> {
             getCenters();
+            $scope.newCenter();
         }, err=> { handleHttpError(err); });
     }
 
